@@ -1,0 +1,22 @@
+version: '3.1'
+services:
+  web:
+    build:
+      context: apache/
+    volumes:
+      - ./html:/var/www/html
+    ports:
+      - "8080:80"
+    depends_on:
+      - db
+    tty: true
+    stdin_open: true
+
+  db:
+    build:
+      context: postgres/
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_PASSWORD: xxxxxx
+      POSTGRES_DB: yyyyyy
