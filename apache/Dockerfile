@@ -7,9 +7,6 @@ RUN apt install
 
 EXPOSE 80
 
-# Copy site into place.
-ADD ../html /var/www/html
-
 # Update the default apache site with the config we created.
 ADD apache-config.conf /etc/apache2/sites-enabled/000-default.conf
 
