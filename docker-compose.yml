@@ -18,5 +18,6 @@ services:
     ports:
       - "5433:5432"
     environment:
-      POSTGRES_PASSWORD: xxxxxx
-      POSTGRES_DB: yyyyyy
+      USER: iriusprod
+      PASSWORD: iriusprod
+      DATABASE: iriusprod

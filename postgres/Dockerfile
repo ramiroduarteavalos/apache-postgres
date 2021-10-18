@@ -1,8 +1,8 @@
 FROM ubuntu:20.04
 
-ENV LANG de_DE.UTF-8
-ENV PG_VERSION 9.6
+ENV LANG es_ES.UTF-8
 #ENV PG_PASSWORD
+ENV PG_VERSION 12
 ENV PG_BASE /var/lib/postgresql
 ENV PG_PASSWORD_FILE ${PG_BASE}/pwfile
 ENV PG_DATA ${PG_BASE}/${PG_VERSION}/main
@@ -12,18 +12,16 @@ ENV PG_BINDIR /usr/lib/postgresql/${PG_VERSION}/bin
 
 RUN apt update 
 
-RUN apt upgrade -y
+ARG DEBIAN_FRONTEND=noninteractive
+ENV TZ=Europe/Madrid
+RUN apt-get install -y tzdata
 
-RUN apt install -y --no-install-recommends \
-    locales \
-    && locale-gen $LANG && update-locale LANG=$LANG \
-    && apt-get install -y --no-install-recommends \
-    postgresql-$PG_VERSION \
-    postgresql-client-$PG_VERSION \
-    postgresql-contrib-$PG_VERSION \
-    postgresql-doc-$PG_VERSION \
-    postgresql-$PG_VERSION-plv8 \
-    postgresql-plpython-$PG_VERSION \
+RUN apt update && apt install locales && locale-gen $LANG && update-locale LANG=$LANG
+
+RUN apt-get install -y postgresql-12 \
+    postgresql-client-12 \
+    postgresql-contrib-12 \
+    postgresql-doc-12 \
     python \
     python3 \
     pwgen \
