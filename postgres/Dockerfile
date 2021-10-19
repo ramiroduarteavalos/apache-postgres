@@ -36,9 +36,11 @@ RUN rm -rf "$PG_BASE" && mkdir -p "$PG_BASE" && chown -R postgres:postgres "$PG_
     && chown -R postgres:postgres /var/run/postgresql && chmod g+s /var/run/postgresql \
     && chmod +x /usr/local/bin/docker-entrypoint.sh
 
-RUN echo "host all  all    0.0.0.0/0  md5" >> $PG_CONFIG_DIR/pg_hba.conf \
-    && echo "host all  all    ::/0  md5" >> $PG_CONFIG_DIR/pg_hba.conf \
-    && echo "listen_addresses='*'" >> $PG_CONFIG_FILE
+COPY pg_hba.conf $PG_CONFIG_DIR/pg_hba.conf
+
+#RUN echo "host all  all    0.0.0.0/0  md5" >> $PG_CONFIG_DIR/pg_hba.conf \
+#    && echo "host all  all    ::/0  md5" >> $PG_CONFIG_DIR/pg_hba.conf \
+#    && echo "listen_addresses='*'" >> $PG_CONFIG_FILE
 
 USER postgres
 ENV LANG es_ES.UTF-8

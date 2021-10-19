@@ -4,29 +4,24 @@ RUN apt update
 
 RUN apt upgrade
 
+ARG DEBIAN_FRONTEND=noninteractive
+ENV TZ=Europe/Madrid
+RUN apt-get install -y tzdata
+
 # Install apache.
-RUN apt install apache2 
+RUN apt install -y apache2 apache2-utils
 
 # Install php + other
-RUN apt install php7.4 \
-    libapache2-mod-php7.4 \
-    openssl \
-    php-imagick \
-    php7.4-common \
-    php7.4-curl \
-    php7.4-gd \
-    php7.4-imap \
-    php7.4-intl \
-    php7.4-json \
-    php7.4-ldap \
-    php7.4-mbstring \
-    php7.4-pgsql \
-    php-ssh2 \
-    php7.4-xml \
-    php7.4-zip 
-    unzip
-    curl
+RUN apt install -y php \
+    libapache2-mod-php \
+    php7.4-cli \
+    openssl
 
+COPY src/000-default.conf /etc/apache2/sites-available
+
+COPY htaccess.conf /etc/apache2/conf-enabled/
+
+RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 EXPOSE 80
 
 # By default, simply start apache.

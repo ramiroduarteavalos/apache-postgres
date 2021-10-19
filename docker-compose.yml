@@ -1,4 +1,4 @@
-version: '3.1'
+version: '3.8'
 services:
   web:
     build:
@@ -7,7 +7,9 @@ services:
       - ./html:/var/www/html
     ports:
       - "8080:80"
-    depends_on:
+    networks:
+      - overlay
+    links:
       - db
     tty: true
     stdin_open: true
@@ -17,7 +19,14 @@ services:
       context: postgres/
     ports:
       - "5433:5432"
+    networks:
+      - overlay
     environment:
-      USER: iriusprod
-      PASSWORD: iriusprod
-      DATABASE: iriusprod
+      PG_PASSWORD: q1w2e3r4
+      POSTGRES_USER: iriusprod
+      POSTGRES_PASSWORD: iriusprod
+      POSTGRES_DB: iriusprod
+
+
+networks:
+  overlay:

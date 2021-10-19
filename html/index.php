@@ -1,5 +1,5 @@
 <?php
-$connection = pg_connect ("host=localhost dbname=iriusprod
+$connection = pg_connect ("host=db dbname=iriusprod
 user=iriusprod password=iriusprod");
 if($connection) {
 echo 'connected';

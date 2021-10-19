@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+PG_PASSWORD=${PG_PASSWORD:-$(pwgen -c -n -1 16)}
+
 if [ ! -d "$PG_DATA" ]; then
 
   echo "${PG_PASSWORD}" > ${PG_PASSWORD_FILE}
@@ -7,11 +9,7 @@ if [ ! -d "$PG_DATA" ]; then
 
   ${PG_BINDIR}/initdb --pgdata=${PG_DATA} --pwfile=${PG_PASSWORD_FILE} \
     --username=postgres --encoding=UTF8 --auth=trust
-  
-  psql --command "CREATE USER ${USER} WITH SUPERUSER PASSWORD '${PASSWORD}';"
-  
-  createdb -O ${DATABASE} ${USER}
-  
+    
   unset PG_PASSWORD
 fi
 
